@@ -1,0 +1,31 @@
+.App {
+    text-align: center;
+}
+
+.App-header {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    height: 10vh;
+}
+
+.App-sidebar {
+    background-color: #282c34;
+    float: left;
+    width: 200px;
+    height: calc(90vh - 30px);
+    text-align: left;
+    padding: 15px;
+    color: white;
+}
+
+.App-container {
+    float: left;
+    width: calc(100% - 232px);
+    height: calc(90vh - 2px);
+    border: aqua 1px solid;
+    position: relative;
+}
