@@ -1,0 +1,9 @@
+services:
+  hpwv:
+    image: buettner123/hpwv
+    build:
+      context: .
+    environment:
+      - NODE_ENV=production
+    ports:
+      - '80:80'
