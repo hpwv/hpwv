@@ -1,6 +1,7 @@
+import _ from 'lodash';
 import socketio from 'socket.io-client';
 import {logger} from '../../utils/logger';
-import {getElementUpdateAction} from '../actions/carActions';
+import * as carActions from '../actions/carActions';
 import {CONNECT, DISCONNECT, getDisconnectAction, SEND_MESSAGE} from '../actions/webSocketActions';
 
 const PAYLOAD_TYPES = {
@@ -9,12 +10,15 @@ const PAYLOAD_TYPES = {
 }
 
 const socketMiddleware = () => {
-    let socket = null;
+    let socket = null,
+        cleanupInterval,
+        updateInterval,
+        carUpdates = {};
 
-    const onMessage = store => (message) => {
-        switch (message.type) {
+    const onMessage = () => (message) => {
+        switch (message.element.type) {
             case PAYLOAD_TYPES.CARS:
-                store.dispatch(getElementUpdateAction(message));
+                carUpdates[message.element.id] = message;
                 break;
             default:
                 break;
@@ -36,11 +40,43 @@ const socketMiddleware = () => {
                     transports: ['websocket']
                 });
 
-                socket.on('message', onMessage(store));
+                cleanupInterval = setInterval(() => {
+                    const staleCars = [],
+                        carsToDelete = [];
+                    store.getState().cars.elementIds.forEach(id => {
+                        const now = Date.now(),
+                            element = store.getState().cars.elements[id];
+                        if (now - element.timestamp > 10000) {
+                            carsToDelete.push(id);
+                            delete carUpdates[id];
+                        } else if (now - element.timestamp > 4000 && !element.stale) {
+                            staleCars.push(id);
+                        }
+                    });
+                    if (staleCars.length > 0) {
+                        store.dispatch(carActions.getElementsSetStaleAction(staleCars));
+                    }
+                    if (carsToDelete.length > 0) {
+                        store.dispatch(carActions.getElementsDeleteAction(carsToDelete));
+                    }
+                }, 1000);
+
+                updateInterval = setInterval(() => {
+                    const events = _.values(carUpdates);
+                    carUpdates = {};
+                    if (events.length > 0) {
+                        store.dispatch(carActions.getElementsUpdateAction(events));
+                    }
+                }, 50);
+
+                socket.on('message', onMessage());
                 socket.on('disconnect', onDisconnect(store));
                 break;
             case DISCONNECT:
                 logger.info('WebSocket disconnected', action.message);
+
+                clearInterval(updateInterval);
+                clearInterval(cleanupInterval);
 
                 if (socket !== null) {
                     socket.close();

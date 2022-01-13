@@ -1,7 +1,9 @@
 import {getSendMessageAction} from './webSocketActions';
 
 export const SWITCH_SHOW_CARS = 'SWITCH_SHOW_CARS';
-export const CAR_UPDATE = 'CAR_UPDATE';
+export const CARS_UPDATE = 'CARS_UPDATE';
+export const SET_CARS_STALE = 'SET_CARS_STALE';
+export const DELETE_CARS = 'DELETE_CARS';
 export const CLEAR_CARS = 'CLEAR_CARS';
 
 const MESSAGE_COMMANDS = {
@@ -16,10 +18,24 @@ function getSwitchShowCarsAction(value) {
     };
 }
 
-export function getElementUpdateAction(element) {
+export function getElementsUpdateAction(events) {
     return {
-        type: CAR_UPDATE,
-        element
+        type: CARS_UPDATE,
+        events
+    };
+}
+
+export function getElementsDeleteAction(ids) {
+    return {
+        type: DELETE_CARS,
+        ids
+    };
+}
+
+export function getElementsSetStaleAction(ids) {
+    return {
+        type: SET_CARS_STALE,
+        ids
     };
 }
 

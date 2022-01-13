@@ -1,29 +1,32 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import './Element.css';
+import {ReactComponent as Car} from './res/directions_car_black_24dp.svg';
+
+const Elements = {
+    cars: Car
+}
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        element: state[ownProps.type].elements[ownProps.id]
+        element: state[ownProps.type].elements[ownProps.id],
+        stale: state[ownProps.type].elements[ownProps.id]?.stale
     };
 }
 
 class Element extends Component {
 
     render() {
-        return (
-            <div className='Element'>
-                <span style={{
-                    position: 'absolute',
-                    left: this.props.element.x,
-                    top: this.props.element.y
-                }}>This is {this.props.type} with id {this.props.element.id}</span>
-            </div>
-        );
+        const {element, stale} = this.props;
+        if (element) {
+            const ElementByType = Elements[this.props.type]
+            return (
+                <ElementByType className={stale ? 'Element-stale' : ''} x={element.x} y={element.y}/>
+            );
+        } else {
+            return (null);
+        }
     }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Element);
+export default connect(mapStateToProps, null)(Element);

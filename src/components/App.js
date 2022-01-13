@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import './App.css';
 import ElementsLayer from './elements/ElementsLayer';
 import {Header} from './header/Header';
+import MapLayer from './map/MapLayer';
 import SideBar from './sidebar/SideBar';
 
 const mapStateToProps = state => {
@@ -18,8 +19,7 @@ function App() {
                 <SideBar/>
             </div>
             <div className="App-container">
-                <ElementsLayer type="cars"/>
-                <ElementsLayer type="cars"/>
+                <MapLayer/>
                 <ElementsLayer type="cars"/>
             </div>
         </div>

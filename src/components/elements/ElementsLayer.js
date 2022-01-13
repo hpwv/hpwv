@@ -1,27 +1,30 @@
-import _ from 'lodash';
 import {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import Element from './Element';
 import './ElementsLayer.css';
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        elementIds: _.keys(state[ownProps.type].elements)
+        elementIds: state[ownProps.type].elementIds
     };
 }
 
 class ElementsLayer extends Component {
 
     render() {
+        const {elementIds, type} = this.props;
         return (
             <div className="ElementsLayer">
-                {this.props.elementIds.map(id => (<Element type={this.props.type} id={id}/>))}
+                <svg width="100%" height="100%" viewBox="0 0 1100 550">
+                    <svg width="1100px" height="550px">
+                        <g>
+                            {elementIds.map(id => (<Element type={type} id={id} key={id}/>))}
+                        </g>
+                    </svg>
+                </svg>
             </div>
         );
     }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ElementsLayer);
+export default connect(mapStateToProps, null)(ElementsLayer);
