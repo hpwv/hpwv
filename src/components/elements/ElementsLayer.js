@@ -11,12 +11,17 @@ const mapStateToProps = (state, ownProps) => {
 
 class ElementsLayer extends Component {
 
+    constructor(props) {
+        super(props);
+        this.viewBox = `${window.ENV.app.area.x0} ${window.ENV.app.area.y0} ${window.ENV.app.area.x1} ${window.ENV.app.area.y1}`;
+    }
+
     render() {
         const {elementIds, type} = this.props;
         return (
             <div className="ElementsLayer">
-                <svg width="100%" height="100%" viewBox="0 0 1100 550">
-                    <svg width="1100px" height="550px">
+                <svg width="100%" height="100%" viewBox={this.viewBox}>
+                    <svg width={window.ENV.app.area.x1 + 'px'} height={window.ENV.app.area.y1 + 'px'}>
                         <g>
                             {elementIds.map(id => (<Element type={type} id={id} key={id}/>))}
                         </g>

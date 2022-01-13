@@ -5,11 +5,16 @@ import {ReactComponent as Map} from './res/map.svg';
 
 class MapLayer extends Component {
 
+    constructor(props) {
+        super(props);
+        this.viewBox = `${window.ENV.app.area.x0} ${window.ENV.app.area.y0} ${window.ENV.app.area.x1} ${window.ENV.app.area.y1}`;
+    }
+
     render() {
         return (
             <div className="MapLayer">
-                <svg width="100%" height="100%" viewBox="0 0 1100 550">
-                    <Map width="1100px" height="550px"/>
+                <svg width="100%" height="100%" viewBox={this.viewBox}>
+                    <Map width={window.ENV.app.area.x1 + 'px'} height={window.ENV.app.area.y1 + 'px'}/>
                 </svg>
             </div>
         );
