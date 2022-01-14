@@ -1,10 +1,14 @@
 import {Component} from 'react';
 import {connect} from 'react-redux';
 import './Element.css';
+import {ReactComponent as Bike} from './res/directions_bike_black_18dp.svg';
 import {ReactComponent as Car} from './res/directions_car_black_24dp.svg';
+import {ReactComponent as Pedestrian} from './res/directions_walk_black_18dp.svg';
 
 const Elements = {
-    cars: Car
+    car: Car,
+    bike: Bike,
+    pedestrian: Pedestrian
 }
 
 const mapStateToProps = (state, ownProps) => {

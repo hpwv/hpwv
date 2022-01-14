@@ -20,7 +20,9 @@ function App() {
             </div>
             <div className="App-container">
                 <MapLayer/>
-                <ElementsLayer type="cars"/>
+                <ElementsLayer type="car"/>
+                <ElementsLayer type="bike"/>
+                <ElementsLayer type="pedestrian"/>
             </div>
         </div>
     );

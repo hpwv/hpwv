@@ -1,4 +1,4 @@
-import {CARS_UPDATE, CLEAR_CARS, DELETE_CARS, SET_CARS_STALE, SWITCH_SHOW_CARS} from '../actions/carActions';
+import {BIKES_UPDATE, CLEAR_BIKES, DELETE_BIKES, SET_BIKES_STALE, SWITCH_SHOW_BIKES} from '../actions/bikeActions';
 import {
     clearElements,
     deleteElements,
@@ -13,21 +13,21 @@ export const initialState = {
     elementIds: []
 };
 
-export function carsReducer(state = initialState, action) {
+export function bikesReducer(state = initialState, action) {
     switch (action.type) {
-        case SWITCH_SHOW_CARS: {
+        case SWITCH_SHOW_BIKES: {
             return switchShowElements(state, action);
         }
-        case CARS_UPDATE: {
+        case BIKES_UPDATE: {
             return elementsUpdate(state, action);
         }
-        case SET_CARS_STALE: {
+        case SET_BIKES_STALE: {
             return setElementsStale(state, action);
         }
-        case DELETE_CARS: {
+        case DELETE_BIKES: {
             return deleteElements(state, action);
         }
-        case CLEAR_CARS: {
+        case CLEAR_BIKES: {
             return clearElements(state);
         }
         default:

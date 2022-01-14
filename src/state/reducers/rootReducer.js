@@ -1,10 +1,16 @@
 import {combineReducers} from 'redux';
-import * as cars from './carsReducer';
+import * as bike from './bikesReducer';
+import * as car from './carsReducer';
+import * as pedestrian from './pedestriansReducer';
 
 export const initialState = {
-    cars: cars.initialState,
+    car: car.initialState,
+    bike: bike.initialState,
+    pedestrian: pedestrian.initialState,
 };
 
 export default combineReducers({
-    cars: cars.carsReducer,
+    car: car.carsReducer,
+    bike: bike.bikesReducer,
+    pedestrian: pedestrian.pedestriansReducer,
 });

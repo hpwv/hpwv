@@ -1,4 +1,10 @@
-import {CARS_UPDATE, CLEAR_CARS, DELETE_CARS, SET_CARS_STALE, SWITCH_SHOW_CARS} from '../actions/carActions';
+import {
+    CLEAR_PEDESTRIANS,
+    DELETE_PEDESTRIANS,
+    PEDESTRIANS_UPDATE,
+    SET_PEDESTRIANS_STALE,
+    SWITCH_SHOW_PEDESTRIANS
+} from '../actions/pedestrianActions';
 import {
     clearElements,
     deleteElements,
@@ -13,21 +19,21 @@ export const initialState = {
     elementIds: []
 };
 
-export function carsReducer(state = initialState, action) {
+export function pedestriansReducer(state = initialState, action) {
     switch (action.type) {
-        case SWITCH_SHOW_CARS: {
+        case SWITCH_SHOW_PEDESTRIANS: {
             return switchShowElements(state, action);
         }
-        case CARS_UPDATE: {
+        case PEDESTRIANS_UPDATE: {
             return elementsUpdate(state, action);
         }
-        case SET_CARS_STALE: {
+        case SET_PEDESTRIANS_STALE: {
             return setElementsStale(state, action);
         }
-        case DELETE_CARS: {
+        case DELETE_PEDESTRIANS: {
             return deleteElements(state, action);
         }
-        case CLEAR_CARS: {
+        case CLEAR_PEDESTRIANS: {
             return clearElements(state);
         }
         default:
