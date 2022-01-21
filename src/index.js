@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {applyMiddleware, compose, createStore} from 'redux';
-import {logger} from 'redux-logger';
+import {createLogger} from 'redux-logger';
 import thunk from 'redux-thunk';
 import App from './components/App';
 import WebSocketWrapper from './components/WebSocketWrapper';
@@ -11,9 +11,12 @@ import reportWebVitals from './reportWebVitals';
 import socketMiddleware from './state/middleware/socketMiddleware';
 import rootReducer, {initialState} from './state/reducers/rootReducer';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = (process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+let middlewares = [thunk, socketMiddleware];
 
-const middlewares = [thunk, logger, socketMiddleware];
+if (process.env.NODE_ENV !== 'production') {
+    middlewares = [...middlewares, createLogger()];
+}
 
 export const store = createStore(
     rootReducer,

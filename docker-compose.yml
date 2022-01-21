@@ -5,5 +5,7 @@ services:
       context: .
     environment:
       - NODE_ENV=production
+    volumes:
+      - ./public/config.js:/usr/share/nginx/html/config.js
     ports:
       - '80:80'

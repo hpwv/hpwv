@@ -5,10 +5,6 @@ import {Header} from './header/Header';
 import MapLayer from './map/MapLayer';
 import SideBar from './sidebar/SideBar';
 
-const mapStateToProps = state => {
-    return state;
-};
-
 function App() {
     return (
         <div className="App">
@@ -28,4 +24,4 @@ function App() {
     );
 }
 
-export default connect(mapStateToProps)(App);
+export default connect()(App);

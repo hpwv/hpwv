@@ -26,6 +26,5 @@
     float: left;
     width: calc(100% - 232px);
     height: calc(90vh - 2px);
-    border: aqua 1px solid;
     position: relative;
 }
