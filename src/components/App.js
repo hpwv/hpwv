@@ -5,11 +5,17 @@ import {Header} from './header/Header';
 import MapLayer from './map/MapLayer';
 import SideBar from './sidebar/SideBar';
 
-function App() {
+const mapStateToProps = state => {
+    return {
+        connected: state.connection.connected
+    };
+};
+
+function App(props) {
     return (
         <div className="App">
             <div className="App-header">
-                <Header/>
+                <Header connected={props.connected}/>
             </div>
             <div className="App-sidebar">
                 <SideBar/>
@@ -24,4 +30,4 @@ function App() {
     );
 }
 
-export default connect()(App);
+export default connect(mapStateToProps)(App);

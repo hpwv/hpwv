@@ -4,7 +4,13 @@ import {logger} from '../../utils/logger';
 import * as bikeActions from '../actions/bikeActions';
 import * as carActions from '../actions/carActions';
 import * as pedestrianActions from '../actions/pedestrianActions';
-import {CONNECT, DISCONNECT, getDisconnectAction, SEND_MESSAGE} from '../actions/webSocketActions';
+import {
+    getConnectedAction,
+    getDisconnectAction,
+    WS_CONNECT,
+    WS_DISCONNECT,
+    WS_SEND_MESSAGE
+} from '../actions/webSocketActions';
 
 const ACTIONS_BY_TYPE = {
     car: carActions,
@@ -28,6 +34,10 @@ const socketMiddleware = () => {
 
     const onDisconnect = store => (message) => {
         store.dispatch(getDisconnectAction(message));
+    };
+
+    const onConnect = store => (message) => {
+        store.dispatch(getConnectedAction(message));
     };
 
     const onUpdate = (store, type) => {
@@ -65,7 +75,7 @@ const socketMiddleware = () => {
 
     return store => next => action => {
         switch (action.type) {
-            case CONNECT:
+            case WS_CONNECT:
                 logger.info('WebSocket connecting to ', window.ENV.app.webSocketUrl);
                 if (socket !== null) {
                     socket.close();
@@ -86,8 +96,9 @@ const socketMiddleware = () => {
 
                 socket.on('message', onMessage());
                 socket.on('disconnect', onDisconnect(store));
-                break;
-            case DISCONNECT:
+                socket.on('connect', onConnect(store));
+                return next(action);
+            case WS_DISCONNECT:
                 logger.info('WebSocket disconnected', action.message);
 
                 updateIntervals.forEach(it => clearInterval(it));
@@ -98,8 +109,8 @@ const socketMiddleware = () => {
                     socket.close();
                 }
                 socket = null;
-                break;
-            case SEND_MESSAGE:
+                return next(action);
+            case WS_SEND_MESSAGE:
                 logger.debug('WebSocket send message', action.message);
 
                 socket.send(action.message);

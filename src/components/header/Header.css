@@ -1,0 +1,20 @@
+.Header {
+    width: 100%;
+    position: relative;
+}
+
+.Header-connection-info {
+    position: absolute;
+    right: 10px;
+    top: 25%;
+    font-weight: bolder;
+    padding: 8px;
+}
+
+.Header-connection-info.disconnected {
+    background-color: #d23838;
+}
+
+.Header-connection-info.connected {
+    background-color: #38d240;
+}

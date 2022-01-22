@@ -10,6 +10,8 @@
     justify-content: center;
     color: white;
     height: 10vh;
+    min-height: 40px;
+    width: 100%;
 }
 
 .App-sidebar {

@@ -1,21 +1,29 @@
-export const CONNECT = 'CONNECT';
-export const DISCONNECT = 'DISCONNECT';
-export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const WS_CONNECT = 'WS_CONNECT';
+export const WS_CONNECTED = 'WS_CONNECTED';
+export const WS_DISCONNECT = 'WS_DISCONNECT';
+export const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE';
 
 export function getConnectAction() {
-    return {type: CONNECT};
+    return {type: WS_CONNECT};
 }
 
 export function getDisconnectAction(message) {
     return {
-        type: DISCONNECT,
+        type: WS_DISCONNECT,
+        message
+    };
+}
+
+export function getConnectedAction(message) {
+    return {
+        type: WS_CONNECTED,
         message
     };
 }
 
 export function getSendMessageAction(message) {
     return {
-        type: SEND_MESSAGE,
+        type: WS_SEND_MESSAGE,
         message
     };
 }
