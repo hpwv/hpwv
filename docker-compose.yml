@@ -8,4 +8,4 @@ services:
     volumes:
       - ./public/config.js:/usr/share/nginx/html/config.js
     ports:
-      - '80:80'
+      - '3001:80'
