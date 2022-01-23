@@ -59,7 +59,7 @@ const socketMiddleware = () => {
             if (now - element.timestamp > 10000) {
                 elementsToDelete.push(id);
                 delete elementUpdates[type][id];
-            } else if (now - element.timestamp > 4000 && !element.stale) {
+            } else if (now - element.timestamp > 5000 && !element.stale) {
                 staleElements.push(id);
             }
         });
@@ -90,8 +90,8 @@ const socketMiddleware = () => {
                     refreshHandler(store, 'pedestrian');
                 }, 1000);
 
-                updateIntervals.push(setInterval(() => onUpdate(store, 'car'), 50));
-                updateIntervals.push(setInterval(() => onUpdate(store, 'bike'), 200));
+                updateIntervals.push(setInterval(() => onUpdate(store, 'car'), 100));
+                updateIntervals.push(setInterval(() => onUpdate(store, 'bike'), 250));
                 updateIntervals.push(setInterval(() => onUpdate(store, 'pedestrian'), 350));
 
                 socket.on('message', onMessage());
