@@ -23,7 +23,7 @@ class Element extends Component {
     render() {
         const {element, stale} = this.props;
         if (element) {
-            const ElementByType = Elements[this.props.type]
+            const ElementByType = Elements[this.props.type];
             return (
                 <ElementByType className={stale ? 'Element-stale' : ''} x={element.x} y={element.y}/>
             );
